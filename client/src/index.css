@@ -1,68 +1,192 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* Neon Palette */
+  --neon-cyan: #00f3ff;
+  --neon-pink: #ff00ff;
+  --neon-purple: #bd00ff;
+  --neon-green: #00ff66;
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  
+  /* FIX: Set global text color variable */
+  --text-main: rgba(255, 255, 255, 0.87);
+  --text-secondary: rgba(255, 255, 255, 0.6);
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
+/* 1. The Moving Aurora Background */
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  padding: 0;
+  background: black;
+  /* FIX: Force all text to be white by default */
+  color: var(--text-main); 
+  
+  /* Deep layered gradients */
+  background-image: 
+    radial-gradient(circle at 15% 50%, rgba(189, 0, 255, 0.25), transparent 25%), 
+    radial-gradient(circle at 85% 30%, rgba(0, 243, 255, 0.25), transparent 25%);
+  overflow-x: hidden;
 }
 
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; 
+  left: 0;
+  width: 100%; 
+  height: 100%;
+  z-index: -1;
+  background: linear-gradient(
+    125deg, 
+    #000000 0%, 
+    #1a0b2e 25%, 
+    #240046 50%, 
+    #0b2e29 75%, 
+    #000000 100%
+  );
+  background-size: 400% 400%;
+  animation: gradient-flow 15s ease infinite;
+}
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  text-align: center;
+  animation: fade-in-up 1s ease-out forwards;
+}
+
+/* 2. Link Coloring (Crucial for visibility) */
+a {
+  font-weight: 500;
+  color: var(--neon-cyan);
+  text-decoration: inherit;
+  transition: 0.25s;
+}
+
+a:hover {
+  color: var(--neon-pink);
+  text-shadow: 0 0 10px var(--neon-pink);
+}
+
+/* 3. Logos */
+.logo {
+  height: 8em;
+  padding: 1.5em;
+  will-change: filter, transform;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 3em var(--neon-purple));
+  transform: scale(1.1) rotate(5deg);
+}
+
+.logo.react:hover {
+  filter: drop-shadow(0 0 3em var(--neon-cyan));
+  transform: scale(1.1) rotate(-180deg);
+}
+
+/* 4. Glass Card & Text Fixes */
+.card {
+  padding: 3em;
+  margin-top: 2em;
+  border-radius: 20px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+  /* FIX: Ensure text inside card is visible */
+  color: var(--text-main);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 50px rgba(189, 0, 255, 0.3), inset 0 0 20px rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* 5. Typography */
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+  background: linear-gradient(to right, var(--neon-cyan), var(--neon-pink), var(--neon-green));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent; /* This makes the gradient show through */
+  background-size: 200% auto;
+  animation: text-shimmer 3s linear infinite;
+  
+  /* Fallback color if gradient fails */
+  text-shadow: 0 0 20px rgba(0, 243, 255, 0.5); 
+}
+
+p {
+  margin-block-start: 1em;
+  margin-block-end: 1em;
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  background: transparent;
+  color: white; /* Force white text */
+  border: 2px solid var(--neon-cyan);
+  padding: 0.8em 1.5em;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1em;
+  transition: 0.25s;
+  box-shadow: 0 0 10px var(--neon-cyan), inset 0 0 0 transparent;
+  text-shadow: 0 0 5px var(--neon-cyan);
+  margin: 10px;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
+button:hover {
+  background: var(--neon-cyan);
+  color: black; /* Invert on hover */
+  box-shadow: 0 0 40px var(--neon-cyan), inset 0 0 20px white;
+  text-shadow: none;
+}
+
+.read-the-docs {
+  color: var(--text-secondary); /* Light Gray */
+  font-weight: 300;
+  letter-spacing: 1px;
+  margin-top: 2rem;
+  opacity: 0.8;
+}
+
+/* 6. Animations */
+@keyframes gradient-flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes text-shimmer {
+  to { background-position: 200% center; }
+}
+
+@keyframes fade-in-up {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
   }
 }

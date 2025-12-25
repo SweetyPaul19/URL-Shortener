@@ -6,7 +6,7 @@ function Login() {
     email: "",
     password: "",
   });
-
+  const backend_url=import.meta.env.VITE_BACKEND_URL;
   const [message, setMessage] = useState("");
   
   // This is the tool that lets us switch pages programmatically
@@ -21,8 +21,9 @@ function Login() {
 
     try {
       // Use the relative path (Proxy will send this to localhost:3000/login)
-      const response = await fetch("/api/login", {
+      const response = await fetch(`${backend_url}/api/login`, {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },

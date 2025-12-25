@@ -8,7 +8,7 @@ function Signup() {
     email: "",
     password: "",
   });
-
+  const backend_url=import.meta.env.VITE_BACKEND_URL;
   const [message, setMessage] = useState(""); // To show success/error messages
   const navigate=useNavigate();
   // 2. Handle Change: Updates state when user types
@@ -21,8 +21,9 @@ function Signup() {
     e.preventDefault(); // STOP the page from reloading!
 
     try {
-      const response = await fetch('/api/signup', {
+      const response = await fetch(`${backend_url}/api/signup`, {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -104,7 +105,7 @@ function Signup() {
 
       <p>Already have an account?</p>
       {/* Update link to point to the React route, not the file */}
-      <a href="/api/login">Login here</a>
+      <a href="/login">Login here</a>
     </div>
   );
 }

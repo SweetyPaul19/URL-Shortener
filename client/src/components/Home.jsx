@@ -17,8 +17,10 @@ function Home() {
 
   const fetchUrls = async () => {
     try {
-      console.log("Fetching /api/urls..."); // DEBUG 1
-      const response = await fetch("/api/urls");
+      
+      const response = await fetch(`${backend_url}/api/urls`,{
+        credentials: "include"
+      });
       const data = await response.json();
 
       console.log("Raw Data from Server:", data); // DEBUG 2: Check this in Console!
@@ -47,9 +49,10 @@ function Home() {
     e.preventDefault(); // Stop page reload
 
     try {
-      const response = await fetch("/api/generate", {
+      const response = await fetch(`${backend_url}/api/generate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({ url: inputUrl }), // Send the "real" URL
       });
 
@@ -80,8 +83,9 @@ function Home() {
     // await fetch("/logout", { method: "POST" });
 
     // For now, just redirect
-    const response = await fetch("/api/logout", {
+    const response = await fetch(`${backend_url}/api/logout`, {
       method: "POST",
+      credentials: "include"
     });
     const data = await response.json();
     if (!response.ok) {

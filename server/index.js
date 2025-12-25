@@ -14,7 +14,10 @@ const PORT = 8000;
 // Middleware
 
 app.use(cors({
-  origin: 'https://url-shortener-nine-orpin.vercel.app',
+  origin: [
+    'https://url-shortener-nine-orpin.vercel.app',
+    'http://localhost:5173'
+  ],
   credentials: true
 }));
 

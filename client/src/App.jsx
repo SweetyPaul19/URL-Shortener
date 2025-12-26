@@ -5,6 +5,7 @@ import Home from './components/Home'; // You need to create this file!
 import ShortUrl from './components/ShortUrl';
 
 function App() {
+  const backend_url=import.meta.env.VITE_BACKEND_URL;
   return (
     <>
       
